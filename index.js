@@ -2,13 +2,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const storedEntries = JSON.parse(localStorage.getItem('entries')) || [];
   const table = document.getElementById('entriesTable').getElementsByTagName('tbody')[0];
 
-  storedEntries.forEach(entry => {
-    const newRow = table.insertRow(-1);
-    Object.values(entry).forEach(value => {
-      const cell = newRow.insertCell();
-      cell.textContent = value;
+  function displayEntries() {
+    table.innerHTML = '';
+    storedEntries.forEach(entry => {
+      const newRow = table.insertRow(-1);
+      Object.values(entry).forEach(value => {
+        const cell = newRow.insertCell();
+        cell.textContent = value;
+      });
     });
-  });
+  }
+
+  displayEntries();
 
   document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -20,17 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const acceptedTerms = document.getElementById('terms').checked;
 
     if (validateEmail(email) && validateAge(dob)) {
-      const newRow = table.insertRow(-1);
-      const cells = [name, email, password, dob, acceptedTerms ? 'Yes' : 'No'];
-      
-      cells.forEach(value => {
-        const cell = newRow.insertCell();
-        cell.textContent = value;
-      });
-
       storedEntries.push({ name, email, password, dob, acceptedTerms });
       localStorage.setItem('entries', JSON.stringify(storedEntries));
-
+      displayEntries();
       document.getElementById('registrationForm').reset();
     } else {
       alert('Please enter a valid email address and ensure you are between 18 and 55 years old.');
@@ -39,8 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('clearDataBtn').addEventListener('click', function() {
     localStorage.removeItem('entries');
-    table.innerHTML = '';
     storedEntries.length = 0;
+    displayEntries();
   });
 
   function validateEmail(email) {
