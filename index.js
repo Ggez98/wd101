@@ -15,20 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   displayEntries();
 
-  function addHeadings() {
-    const thead = document.getElementById('entriesTable').getElementsByTagName('thead')[0];
-    const headings = ['Name', 'Email', 'Password', 'Date of Birth', 'Accepted terms?'];
-    const row = thead.insertRow(-1);
-
-    headings.forEach(heading => {
-      const th = document.createElement('th');
-      th.textContent = heading;
-      row.appendChild(th);
-    });
-  }
-
-  addHeadings(); // Call to add headings
-
   document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
