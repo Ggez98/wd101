@@ -15,6 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   displayEntries();
 
+  function addHeadings() {
+    const thead = document.getElementById('entriesTable').getElementsByTagName('thead')[0];
+    const headings = ['Name', 'Email', 'Password', 'Date of Birth', 'Accepted terms?'];
+    const row = thead.insertRow(-1);
+
+    headings.forEach(heading => {
+      const th = document.createElement('th');
+      th.textContent = heading;
+      row.appendChild(th);
+    });
+  }
+
+  addHeadings(); // Call to add headings
+
   document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -32,12 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       alert('Please enter a valid email address and ensure you are between 18 and 55 years old.');
     }
-  });
-
-  document.getElementById('clearDataBtn').addEventListener('click', function() {
-    localStorage.removeItem('entries');
-    storedEntries.length = 0;
-    displayEntries();
   });
 
   function validateEmail(email) {
